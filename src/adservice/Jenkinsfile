@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    
+
     environment {
         SONAR_PROJECT_KEY = "microservices-adservice"  // Specify your project key here
         SONAR_PROJECT_NAME = "Ad Service"  // Optional: Give your project a name
