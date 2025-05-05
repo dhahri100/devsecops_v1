@@ -24,7 +24,7 @@ pipeline {
                 script {
                     withSonarQubeEnv('SonarQube-Server') {
                         sh '''
-                            ${SCANNER_HOME}/bin/sonar-scanner \
+                            ${SCANNER_HOME}/bin/SonarQube-Scanner \
                             -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                             -Dsonar.projectName="${SONAR_PROJECT_NAME}" \
                             -Dsonar.projectVersion=${SONAR_PROJECT_VERSION} \
