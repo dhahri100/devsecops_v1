@@ -23,10 +23,12 @@ pipeline {
                          
                             sh """
                                 ${scannerHome}/bin/sonar-scanner \
-                                -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                                -Dsonar.projectName="${SONAR_PROJECT_NAME}" \
-                                -Dsonar.projectVersion=${SONAR_PROJECT_VERSION} \
-                                -Dsonar.sources=. 
+                                /var/lib/jenkins/.jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScanner/bin/sonar-scanner \
+                                  -Dsonar.projectKey=cartservice \
+                                  -Dsonar.projectName="Cart Service" \
+                                  -Dsonar.projectVersion=1.0 \
+                                  -Dsonar.sources=. \
+                                  -Dsonar.exclusions=**/*.java
                             """
                         }
                     }
