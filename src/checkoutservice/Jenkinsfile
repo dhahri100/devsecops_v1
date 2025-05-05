@@ -6,7 +6,7 @@ pipeline {
     agent any
 
     environment {
-        SCANNER_HOME = tool name: 'SonarQube-Scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'  // Configured SonarQube Scanner
+       
         SONAR_PROJECT_KEY = "microservices-checkoutservice"  // Specify project key
         SONAR_PROJECT_NAME = "Checkout Service"  // Optional: Give the project a name
         SONAR_PROJECT_VERSION = "1.0"
@@ -19,21 +19,25 @@ pipeline {
 
     stages {
         
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    withSonarQubeEnv('SonarQube-Server') {
-                        sh '''
-                            ${SCANNER_HOME}/bin/SonarQube-Scanner \
-                            -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                            -Dsonar.projectName="${SONAR_PROJECT_NAME}" \
-                            -Dsonar.projectVersion=${SONAR_PROJECT_VERSION} \
-                            -Dsonar.sources=.
-                        '''  // SonarQube scan
-                    }
-                }
+          
+       stage('SonarQube Analysis') {
+    steps {
+        script {
+            withSonarQubeEnv('SonarQube-Server') {
+                def scannerHome = tool 'SonarScanner'
+                sh 'mvn clean compile'
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                    -Dsonar.projectName="${SONAR_PROJECT_NAME}" \
+                    -Dsonar.projectVersion=${SONAR_PROJECT_VERSION} \
+                    -Dsonar.sources=. \
+                    -Dsonar.java.binaries=target/classes
+                """
             }
         }
+    }
+}
 
         stage("Quality Gate") {
             steps {
