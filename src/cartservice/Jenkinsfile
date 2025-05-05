@@ -29,6 +29,7 @@ pipeline {
                                   -Dsonar.sources=. \
                                   -Dsonar.exclusions=**/*.java
                                   -Dsonar.exclusions=**/*.java,**/*.js,**/*.ts
+                                  -Dsonar.nodejs.executable=/usr/bin/node
 
                             """
                         }
